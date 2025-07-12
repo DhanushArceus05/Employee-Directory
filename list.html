@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee List</title>
+  <link rel="stylesheet" href="public/css/styles.css" />
+  <script src="public/js/data.js"></script>
+</head>
+<body>
+  <header>
+    <h1>List View</h1>
+    <nav><a href="dashboard.html">← Back to Dashboard</a></nav>
+  </header>
+  <main>
+    <ul id="listView"></ul>
+  </main>
+  <script>
+    const ul = document.getElementById("listView");
+    employeeData.forEach(e => {
+      const li = document.createElement("li");
+      li.textContent = `${e.firstName} ${e.lastName} - ${e.department} - ${e.role}`;
+      ul.appendChild(li);
+    });
+  </script>
+</body>
+</html>

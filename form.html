@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add/Edit Employee</title>
+  <link rel="stylesheet" href="public/css/styles.css" />
+  <script src="public/js/data.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Add/Edit Employee</h1>
+    <nav><a href="dashboard.html">← Back to Dashboard</a></nav>
+  </header>
+  <main>
+    <form id="empForm">
+      <input type="hidden" id="empId" />
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" required />
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" required />
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+      <label for="department">Department</label>
+      <select id="department">
+        <option value="Engineering">Engineering</option>
+        <option value="Design">Design</option>
+      </select>
+      <label for="role">Role</label>
+      <select id="role">
+        <option value="Frontend Developer">Frontend Developer</option>
+        <option value="UI/UX Designer">UI/UX Designer</option>
+      </select>
+      <button type="submit">Save</button>
+    </form>
+  </main>
+  <script>
+    const form = document.getElementById("empForm");
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
+    if (id) {
+      const emp = employeeData.find(e => e.id === id);
+      if (emp) {
+        document.getElementById("empId").value = emp.id;
+        document.getElementById("firstName").value = emp.firstName;
+        document.getElementById("lastName").value = emp.lastName;
+        document.getElementById("email").value = emp.email;
+        document.getElementById("department").value = emp.department;
+        document.getElementById("role").value = emp.role;
+      }
+    }
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const empId = document.getElementById("empId").value;
+      const newEmp = {
+        id: empId ? parseInt(empId) : Date.now(),
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("email").value,
+        department: document.getElementById("department").value,
+        role: document.getElementById("role").value
+      };
+      const index = employeeData.findIndex(e => e.id === newEmp.id);
+      if (index >= 0) {employeeData[index] = newEmp;
+      }else {employeeData.push(newEmp);
+      }
+      saveData();
+      alert("Employee saved!");
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>
